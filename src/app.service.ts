@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { JSONFilePreset } from 'lowdb/node';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
+  async getData(): Promise<string> {
+    // initite lowdb
+    const db = await JSONFilePreset('db.json', { posts: [] as string[] });
+
+    // sample: insert lowdb
+    await db.update(({ posts }) => posts.push('hello world'));
+
     return 'Hello World!';
   }
 }
